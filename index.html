@@ -324,12 +324,39 @@ A self-learning automated textile factory would rely on which AI type?,General,N
       };
 
       // --- From components/ResultsScreen.tsx ---
-      const motivationalQuotes = [
-        { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-        { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-        { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-        { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-        { quote: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" }
+      const motivationalQuotes = [    
+          { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+          { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+          { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+          { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+          { quote: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+          { quote: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
+          { quote: "Your limitation—it’s only your imagination.", author: "Unknown" },
+          { quote: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
+          { quote: "Great things never come from comfort zones.", author: "Unknown" },
+          { quote: "Dream it. Wish it. Do it.", author: "Unknown" },
+          { quote: "Success doesn’t just find you. You have to go out and get it.", author: "Unknown" },
+          { quote: "The harder you work for something, the greater you’ll feel when you achieve it.", author: "Unknown" },
+          { quote: "Don’t stop when you’re tired. Stop when you’re done.", author: "Unknown" },
+          { quote: "Wake up with determination. Go to bed with satisfaction.", author: "Unknown" },
+          { quote: "Do something today that your future self will thank you for.", author: "Sean Patrick Flanery" },
+          { quote: "Little things make big days.", author: "Unknown" },
+          { quote: "It’s going to be hard, but hard does not mean impossible.", author: "Unknown" },
+          { quote: "Don’t wait for opportunity. Create it.", author: "Unknown" },
+          { quote: "Sometimes we’re tested not to show our weaknesses, but to discover our strengths.", author: "Unknown" },
+          { quote: "The key to success is to focus on goals, not obstacles.", author: "Unknown" },
+          { quote: "Dream bigger. Do bigger.", author: "Unknown" },
+          { quote: "Don’t watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+          { quote: "Motivation is what gets you started. Habit is what keeps you going.", author: "Jim Ryun" },
+          { quote: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+          { quote: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
+          { quote: "Success is what happens after you have survived all your mistakes.", author: "Anora Lee" },
+          { quote: "Don’t limit your challenges. Challenge your limits.", author: "Unknown" },
+          { quote: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+          { quote: "If you can dream it, you can do it.", author: "Walt Disney" },
+          { quote: "Opportunities don’t happen. You create them.", author: "Chris Grosser" },
+          { quote: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" }
+
       ];
       const ResultsScreen = ({ questions, userAnswers, participant }) => {
         const [submissionStatus, setSubmissionStatus] = useState('idle');
