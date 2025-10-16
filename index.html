@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI in Textiles Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="AI Quiz">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.5s ease-in-out forwards;
+      }
+    </style>
+    <!-- React and Babel CDNs for in-browser JSX transformation -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-900 text-white">
+    <div id="root"></div>
+    
+    <script type="text/babel">
+      // --- Destructuring React ---
+      const { useState, useCallback, useMemo, useEffect, useRef } = React;
+
+      // --- From google-sheets-api.ts ---
+      const GOOGLE_SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbzRjmkp-ov6Mh8pO6lz9Efm_WVnAHWrubHoxMKntbAf9Y0pEUasXU7gQeyIx4BbyQk2/exec';
+
+      // --- From data/quizData.ts ---
+      const csvData = `Question,Option A,Option B,Option C,Option D,Answer
+Which AI model is commonly used for detecting fabric defects from images?,Regression,CNN,Decision Tree,Naive Bayes,CNN
+What type of data is used by AI for identifying color variations in fabric?,Audio,Image,Text,Numeric,Image
+Which AI field enables machines to analyze textile patterns visually?,NLP,Computer Vision,Robotics,Data Mining,Computer Vision
+AI robots performing automatic stitching in garment factories use which domain?,NLP,Robotics,Prediction,Vision,Robotics
+Which AI algorithm can identify different fabric types through photos?,CNN,RNN,GAN,LSTM,CNN
+Recommending the best clothing to online shoppers is an example of what AI system?,Chatbot,Recommendation,Regression,Optimization,Recommendation
+Which AI method helps forecast future textile market trends?,Time Series,CNN,Clustering,Regression,Time Series
+Fabric inspection systems detect tiny holes using which AI technique?,Object Detection,Speech Recognition,Clustering,Reinforcement,Object Detection
+AI predicting cotton yield primarily relies on which data type?,Satellite,Text,Audio,Video,Satellite
+Identifying surface texture of cloth is mainly done using which AI model?,CNN,LSTM,GAN,Decision Tree,CNN
+Customer support bots helping users choose fabrics are based on which AI branch?,NLP,Vision,Robotics,Clustering,NLP
+Predicting when textile machines may fail is an example of what AI use?,Predictive Maintenance,Sentiment Analysis,Image Generation,Classification,Predictive Maintenance
+Grouping similar fabric samples automatically can be achieved using?,Clustering,Regression,CNN,LSTM,Clustering
+Identifying fake clothing logos is possible with which AI field?,Image Recognition,Text Mining,Regression,Audio Detection,Image Recognition
+AI creating new textile prints based on old ones uses which model?,GAN,RNN,CNN,Regression,GAN
+Predicting future price of yarn is done using which AI technique?,Regression,Classification,Clustering,GAN,Regression
+Suggesting optimal dye mixture ratios based on color data uses?,Regression,NLP,CNN,LSTM,Regression
+Detecting defects in moving fabric video frames requires which model?,CNN,LSTM,GAN,RNN,LSTM
+Adjusting loom machine speed based on fabric output quality uses?,Reinforcement,Supervised,Regression,NLP,Reinforcement
+Smart fabric inspection robots depend on which AI area?,Robotics,NLP,Clustering,GAN,Robotics
+Predicting how fabric will wrinkle after washing is done using?,Predictive,Regression,NLP,Reinforcement,Predictive
+Automatically generating new textile patterns is a function of?,GAN,CNN,Regression,Decision Tree,GAN
+Translating customer feedback about fabrics into English uses which AI?,NLP,Vision,Robotics,Classification,NLP
+Dyeing machines that self-correct color tones use what AI mechanism?,Feedback,Clustering,Regression,Tokenization,Feedback
+Predicting delivery delays in textile shipping is achieved using?,Forecasting,GAN,NLP,CNN,Forecasting
+Detecting temperature inconsistency in dyeing units requires?,Sensor,Vision,NLP,Reinforcement,Sensor
+Identifying counterfeit fabrics online uses which AI method?,Classification,Regression,GAN,LSTM,Classification
+Predicting cloth tearing strength from production data uses?,Regression,NLP,Clustering,CNN,Regression
+AI trained with both labeled and unlabeled textile data is called?,Supervised,Semi-supervised,Reinforcement,Unsupervised,Semi-supervised
+Optimizing the cutting layout for fabric pieces can be done with?,Genetic,Regression,CNN,NLP,Genetic
+Predicting yarn thickness variation relies on which AI model?,Regression,Clustering,GAN,CNN,Regression
+Detecting fiber damage under microscope images uses?,Vision,NLP,GAN,Regression,Vision
+Forecasting fabric demand using social media image posts uses?,Multimodal,NLP,Regression,CNN,Multimodal
+Estimating body size from uploaded photos applies which AI area?,Vision,NLP,Regression,Reinforcement,Vision
+Forecasting global cotton demand is best achieved using?,Economic,Market,Sensor,Audio,Market
+Detecting unusual vibration in textile machinery uses which AI area?,Audio,Vision,NLP,Regression,Audio
+Labeling fabric categories automatically in warehouse photos uses?,Classification,NLP,Regression,Reinforcement,Classification
+Reducing energy usage in textile factories can be optimized using?,Reinforcement,Regression,CNN,Clustering,Reinforcement
+Creating new design patterns based on old collections uses which AI?,GAN,RNN,Regression,CNN,GAN
+Suggesting the best weaving method for a fabric type uses?,Expert,Regression,GAN,NLP,Expert
+Detecting stains on fabrics using light-based imaging applies?,Vision,Audio,NLP,Regression,Vision
+Predicting thread breakage during weaving uses?,Predictive,NLP,GAN,Regression,Predictive
+Suggesting popular color combinations for new fashion lines uses?,Recommendation,Reinforcement,NLP,Regression,Recommendation
+Predicting number of defects from machine log data uses?,Classification,Regression,Clustering,NLP,Classification
+Identifying ethical and sustainable textile suppliers uses?,NLP,Vision,Regression,Reinforcement,NLP
+Virtual try-on mirrors for customers are powered by which AI domain?,Vision,NLP,GAN,Regression,Vision
+Detecting moisture damage in stored textiles uses?,Sensor,NLP,GAN,Reinforcement,Sensor
+Simulating fabric movement digitally under airflow uses?,Simulation,Regression,GAN,NLP,Simulation
+Optimizing textile production workflow with many AI agents is an example of?,Multiagent,Regression,GAN,NLP,Multiagent
+A self-learning automated textile factory would rely on which AI type?,General,NLP,Regression,GAN,General`;
+
+      const parseCSV = (data) => {
+        const lines = data.trim().split('\n');
+        return lines.slice(1).map(line => {
+          const values = line.split(',');
+          return {
+            question: values[0],
+            options: [values[1], values[2], values[3], values[4]],
+            answer: values[5]
+          };
+        });
+      };
+      const allQuestions = parseCSV(csvData);
+      const getRandomQuestions = (numQuestions) => {
+        const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, numQuestions);
+      };
+
+      // --- From components/Icons.tsx ---
+      const StarIcon = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      );
+      const DocumentChartBarIcon = () => (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-violet-400" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M3 3.5A1.5 1.5 0 014.5 2h6.879a1.5 1.5 0 011.06.44l4.122 4.12A1.5 1.5 0 0117 7.622V16.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 013 16.5v-13z" />
+              <path d="M9 14a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" />
+              <path d="M12 10a1 1 0 011-1h.01a1 1 0 110 2H13a1 1 0 01-1-1z" />
+              <path d="M6 14a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1z" />
+              <path d="M6 10a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1z" />
+              <path d="M9 7a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" />
+          </svg>
+      );
+
+      // --- From components/StartScreen.tsx ---
+      const StartScreen = ({ onStart }) => {
+        return (
+          <div className="max-w-md mx-auto text-center p-4 sm:p-0">
+            <h1 className="text-5xl font-bold text-violet-400 mb-4">
+              AI Knowledge Quiz
+            </h1>
+            <p className="text-gray-300 mb-10 text-lg">
+              Test your ai implementation in textile knowledge with our interactive quiz
+            </p>
+            <div className="space-y-4 mb-10 text-left">
+              <div className="bg-black/30 rounded-xl p-4 flex items-center space-x-4">
+                <div className="bg-violet-500/20 p-2 rounded-full flex items-center justify-center">
+                  <StarIcon />
+                </div>
+                <div>
+                  <h2 className="font-semibold text-white">Quick & Easy</h2>
+                  <p className="text-gray-400 text-sm">3 questions, 2-3 minutes</p>
+                </div>
+              </div>
+              <div className="bg-black/30 rounded-xl p-4 flex items-center space-x-4">
+                <div className="bg-violet-500/20 p-2 rounded-full flex items-center justify-center">
+                  <DocumentChartBarIcon />
+                </div>
+                <div>
+                  <h2 className="font-semibold text-white">Instant Results</h2>
+                  <p className="text-gray-400 text-sm">Get your score and correct answers</p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={onStart}
+              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-4 px-6 rounded-lg text-xl transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-violet-400/50 shadow-lg shadow-violet-500/20"
+            >
+              Start Free Quiz
+            </button>
+          </div>
+        );
+      };
+
+      // --- From components/DetailsScreen.tsx ---
+      const DetailsScreen = ({ onSubmit }) => {
+        const [name, setName] = useState('');
+        const [department, setDepartment] = useState('');
+        const [error, setError] = useState('');
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          if (!name.trim() || !department.trim()) {
+            setError('Please fill out all fields.');
+            return;
+          }
+          setError('');
+          onSubmit({ name, department });
+        };
+
+        return (
+          <div className="max-w-md mx-auto bg-gray-800 rounded-2xl shadow-xl p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-white">Enter Your Details</h1>
+              <p className="text-gray-400 mt-2">We need some information before you start</p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  aria-required="true"
+                />
+              </div>
+              <div>
+                <label htmlFor="department" className="block text-sm font-medium text-gray-300 mb-2">
+                  Department
+                </label>
+                <input
+                  type="text"
+                  id="department"
+                  name="department"
+                  value={department}
+                  onChange={(e) => setDepartment(e.target.value)}
+                  placeholder="Enter your department"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  aria-required="true"
+                />
+              </div>
+              {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+              <button
+                type="submit"
+                className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-violet-400/50"
+              >
+                Start Quiz
+              </button>
+            </form>
+          </div>
+        );
+      };
+
+      // --- From components/QuizScreen.tsx ---
+      const QuizScreen = ({ question, onSelectAnswer, currentIndex, totalQuestions }) => {
+        const [selectedOption, setSelectedOption] = useState(null);
+        const questionRef = useRef(null);
+
+        useEffect(() => {
+          setSelectedOption(null);
+          if (questionRef.current) {
+            questionRef.current.focus();
+          }
+        }, [question]);
+
+        if (!question) {
+          return <div className="text-center text-xl">Loading question...</div>;
+        }
+
+        const handleOptionClick = (option) => {
+          if (selectedOption) {
+            return;
+          }
+          setSelectedOption(option);
+          onSelectAnswer(option);
+        };
+
+        return (
+          <div className="bg-gray-800 rounded-2xl shadow-xl p-8 w-full">
+            <div className="mb-6">
+              <p className="text-sm font-semibold text-violet-400">
+                Question {currentIndex + 1} of {totalQuestions}
+              </p>
+              <div className="w-full bg-gray-700 rounded-full h-2.5 mt-2">
+                <div
+                  className="bg-violet-500 h-2.5 rounded-full transition-all duration-500"
+                  style={{ width: `${((currentIndex + 1) / totalQuestions) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+            <h2 
+              ref={questionRef}
+              tabIndex={-1}
+              className="text-2xl font-semibold text-white mb-8 min-h-[6rem] focus:outline-none"
+            >
+              {question.question}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {question.options.map((option, index) => {
+                const isSelected = selectedOption === option;
+                const isAnswered = selectedOption !== null;
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionClick(option)}
+                    disabled={isAnswered}
+                    className={`
+                      w-full text-white font-medium py-4 px-4 rounded-lg text-left transition-all duration-200 ease-in-out transform
+                      focus:outline-none focus:ring-4 focus:ring-violet-500
+                      ${isSelected ? 'bg-violet-700' : 'bg-gray-700'}
+                      ${!isAnswered ? 'hover:bg-violet-700 hover:-translate-y-1 active:scale-95' : 'cursor-not-allowed'}
+                    `}
+                  >
+                    <span className={`
+                      rounded-md px-2.5 py-1 mr-3 font-bold
+                      ${isSelected ? 'bg-violet-500 text-white' : 'bg-gray-600 text-violet-300'}
+                    `}>
+                      {String.fromCharCode(65 + index)}
+                    </span>
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      };
+
+      // --- From components/ResultsScreen.tsx ---
+      const motivationalQuotes = [
+        { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+        { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+        { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+        { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+        { quote: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" }
+      ];
+      const ResultsScreen = ({ questions, userAnswers, participant }) => {
+        const [submissionStatus, setSubmissionStatus] = useState('idle');
+
+        const score = useMemo(() => userAnswers.reduce((acc, answer, index) => {
+          return acc + (answer === questions[index].answer ? 1 : 0);
+        }, 0), [userAnswers, questions]);
+
+        const scorePercentage = useMemo(() => (score / questions.length) * 100, [score, questions.length]);
+
+        const detailedAnswers = useMemo(() => {
+          return questions.map((q, index) => ({
+            question: q.question,
+            selected_option: userAnswers[index] || 'No answer',
+            correct: userAnswers[index] === q.answer,
+          }));
+        }, [questions, userAnswers]);
+
+        const randomQuote = useMemo(() => 
+          motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)],
+          []
+        );
+
+        useEffect(() => {
+          const submitResults = async () => {
+            if (!participant || !GOOGLE_SHEET_API_URL) return;
+            
+            setSubmissionStatus('submitting');
+            try {
+              const payload = {
+                name: participant.name,
+                department: participant.department,
+                score: scorePercentage,
+                answers: detailedAnswers,
+              };
+              await fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload),
+              });
+              setSubmissionStatus('success');
+            } catch (error) {
+              console.error("Failed to submit results:", error);
+              setSubmissionStatus('error');
+            }
+          };
+          submitResults();
+        }, [participant, scorePercentage, detailedAnswers]);
+
+        const renderSubmissionStatus = () => {
+          switch (submissionStatus) {
+            case 'submitting':
+              return <p className="text-sm text-gray-400 mt-1">Saving results...</p>;
+            case 'success':
+              return null;
+            case 'error':
+              return <p className="text-sm text-red-400 mt-1">Failed to save results.</p>;
+            default:
+              return null;
+          }
+        };
+
+        return (
+          <div className="bg-gray-800 rounded-2xl shadow-xl p-8 w-full">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-violet-400">Quiz Complete!</h2>
+              <p className="text-gray-200 text-xl mt-2">Well done{participant ? `, ${participant.name}` : ''}!</p>
+              <p className="text-5xl font-bold my-4">
+                {Math.round(scorePercentage)}%
+              </p>
+              <p className="text-xl text-gray-300">You got {score} out of {questions.length} questions correct.</p>
+              <div className="h-6">{renderSubmissionStatus()}</div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-gray-700 text-center">
+              <blockquote className="max-w-xl mx-auto mb-8">
+                <p className="text-lg italic text-gray-300">"{randomQuote.quote}"</p>
+                <footer className="mt-4 text-md text-violet-400 font-semibold">- {randomQuote.author}</footer>
+              </blockquote>
+            </div>
+          </div>
+        );
+      };
+
+      // --- From App.tsx ---
+      const App = () => {
+        const [gameState, setGameState] = useState('start');
+        const [participant, setParticipant] = useState(null);
+        const [questions, setQuestions] = useState([]);
+        const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+        const [userAnswers, setUserAnswers] = useState([]);
+
+        const handleProceedToDetails = useCallback(() => {
+          setGameState('details');
+        }, []);
+
+        const handleStartQuiz = useCallback((participantDetails) => {
+          setParticipant(participantDetails);
+          const newQuestions = getRandomQuestions(3);
+          setQuestions(newQuestions);
+          setCurrentQuestionIndex(0);
+          setUserAnswers([]);
+          setGameState('quiz');
+        }, []);
+
+        const handleSelectAnswer = useCallback((selectedAnswer) => {
+          if (userAnswers.length > currentQuestionIndex) {
+            return;
+          }
+          const updatedAnswers = [...userAnswers, selectedAnswer];
+          setUserAnswers(updatedAnswers);
+          setTimeout(() => {
+            if (currentQuestionIndex < questions.length - 1) {
+              setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+            } else {
+              setGameState('results');
+            }
+          }, 300);
+        }, [currentQuestionIndex, questions.length, userAnswers]);
+
+        const renderGameState = () => {
+          switch (gameState) {
+            case 'details':
+              return <DetailsScreen onSubmit={handleStartQuiz} />;
+            case 'quiz':
+              return (
+                <QuizScreen
+                  key={currentQuestionIndex}
+                  question={questions[currentQuestionIndex]}
+                  onSelectAnswer={handleSelectAnswer}
+                  currentIndex={currentQuestionIndex}
+                  totalQuestions={questions.length}
+                />
+              );
+            case 'results':
+              return (
+                <ResultsScreen
+                  participant={participant}
+                  questions={questions}
+                  userAnswers={userAnswers}
+                />
+              );
+            case 'start':
+            default:
+              return <StartScreen onStart={handleProceedToDetails} />;
+          }
+        };
+
+        return (
+          <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-4">
+            <main className="w-full max-w-2xl mx-auto">
+              <div key={gameState} className="animate-fade-in-up">
+                {renderGameState()}
+              </div>
+            </main>
+          </div>
+        );
+      };
+
+      // --- From index.tsx ---
+      const rootElement = document.getElementById('root');
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(<App />);
+    </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
